@@ -4,12 +4,26 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Week2-3_web-page</title>
+    <title>Week4-5_web-page</title>
     <link rel="stylesheet" href="css/font-awesome/css/font-awesome.min.css">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
     <link href="css/style.css" rel="stylesheet">
+
+    <script src="https://www.gstatic.com/firebasejs/4.10.0/firebase.js"></script>
+    <script>
+        // Initialize Firebase
+        var config = {
+            apiKey: "AIzaSyASJC06fYm-JYUA-cpTN9K3BRqODY51MrY",
+            authDomain: "natalydid-ba904.firebaseapp.com",
+            databaseURL: "https://natalydid-ba904.firebaseio.com",
+            projectId: "natalydid-ba904",
+            storageBucket: "natalydid-ba904.appspot.com",
+            messagingSenderId: "72477600077"
+        };
+        firebase.initializeApp(config);
+    </script>
 </head>
-<body>
+<body >
 <div class="wrapper">
     <section class="header">
         <div class="container">
@@ -18,7 +32,42 @@
                     <a href="index.html"><img src="img/logo.png"></a>
                 </div>
 
+                <p id="errors"></p>
+
+                <!--<div class="login">
+                    <form action="#" name="login">
+                        <fieldset>
+                            <legend>Войти</legend>
+                            <input type="email" placeholder="email" required>
+                            <input type="password" placeholder="password" required>
+                            <button>Войти</button>
+                        </fieldset>
+                    </form>
+                </div>
+
+                <div class="registration">
+
+                    <form action="#" name="register">
+                        <fieldset>
+                            <legend>Зарегистрироваться</legend>
+                            <input type="text" placeholder="Name" required>
+                            <input type="email" placeholder="email" required>
+                            <input type="password" required placeholder="password">
+                            <input type="password" placeholder="repeat password" required>
+                            <button>Регистрация</button>
+                        </fieldset>
+                    </form>
+
+                </div>-->
+
                 <div class="col-xs-10 text-right">
+                    <div class="welcome  ">
+                        <span class="user-name">Welcome</span>
+                        <br>
+                        <button id="btnLogout" type="button" class="btn btn-autor">Выйти</button>
+
+                    </div>
+
                     <ul class="autorization">
 
                         <button type="button" class="btn btn-autor" data-toggle="modal" data-target="#myModal1">Войти
@@ -38,14 +87,14 @@
                                         <h4 class="modal-title" id="myModalLabel1">Войти</h4>
                                     </div>
                                     <div class="modal-body">
-                                        <form action="">
+                                        <form action="" name="auth">
                                             <div class="form-group">
-                                                <label for="login1" class="control-label">Логин:</label>
-                                                <input type="text" class="form-control" id="login1" required="required">
+                                                <label for="auth_login" class="control-label">Логин:</label>
+                                                <input type="text" class="form-control" id="auth_login" required="required">
                                             </div>
                                             <div class="form-group">
-                                                <label for="pw1" class="control-label">Пароль:</label>
-                                                <input type="password" class="form-control" id="pw1"
+                                                <label for="auth_password" class="control-label">Пароль:</label>
+                                                <input type="password" class="form-control" id="auth_password"
                                                        required="required">
                                             </div>
                                         </form>
@@ -54,7 +103,7 @@
                                         <button type="button" class="btn btn-default" data-dismiss="modal">Закрыть
                                         </button>
                                         <button type="submit" class="btn btn-success" data-toggle="modal"
-                                                data-target="#myModal1">Войти
+                                                data-target="#myModal1" id="auth">Войти
                                         </button>
                                     </div>
                                 </div>
@@ -70,18 +119,24 @@
                                         <h4 class="modal-title" id="myModalLabel2">Регистрация</h4>
                                     </div>
                                     <div class="modal-body">
-                                        <form action="">
+                                        <form action="" name="register">
+
                                             <div class="form-group">
-                                                <label for="email" class="control-label">Эл. почта:</label>
-                                                <input type="email" class="form-control" id="email" required="required">
+                                                <label for="register_login" class="control-label">Логин:</label>
+                                                <input type="text" class="form-control" id="register_login" required="required">
                                             </div>
                                             <div class="form-group">
-                                                <label for="login2" class="control-label">Логин:</label>
-                                                <input type="text" class="form-control" id="login2" required="required">
+                                                <label for="register_email" class="control-label">Почта:</label>
+                                                <input type="text" class="form-control" id="register_email" required="required">
                                             </div>
                                             <div class="form-group">
-                                                <label for="pw2" class="control-label">Пароль:</label>
-                                                <input type="password" class="form-control" id="pw2"
+                                                <label for="register_password" class="control-label">Пароль:</label>
+                                                <input type="password" class="form-control" id="register_password"
+                                                       required="required">
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="register_confirmation" class="control-label">Подтвердите пароль:</label>
+                                                <input type="password" class="form-control" id="register_confirmation"
                                                        required="required">
                                             </div>
                                         </form>
@@ -90,7 +145,7 @@
                                         <button type="button" class="btn btn-default" data-dismiss="modal">Закрыть
                                         </button>
                                         <button type="submit" class="btn btn-success" data-toggle="modal"
-                                                data-target="#myModal2">Зарегистрироваться
+                                                data-target="#myModal2" id="register">Зарегистрироваться
                                         </button>
                                     </div>
                                 </div>
@@ -115,8 +170,8 @@
         <div class="container">
             <div class="row main-row">
                 <div class="col-sm-3 sidebar" id="sidebar">
-                    <button type="button" id="burger" class="btn"><i class="fa fa-bars"></i></button>
-                    <ul class="side-menu">
+                    <button type="button" id="burger" class="btn "><i class="fa fa-bars "></i></button>
+                    <ul class="side-menu ">
                         <li><a href="#">Magnam</a></li>
                         <li><a href="#">Blanditiis</a></li>
                         <li><a href="#">Provident</a></li>
@@ -124,7 +179,7 @@
                         <li><a href="#">Pariatur</a></li>
                     </ul>
 
-                    <div class="controls">
+                    <div class="controls display_none">
                         <form>
                             <div class="form-group">
                                 <label for="font_size">Enter font-size:</label>
@@ -166,7 +221,7 @@
                                 <select class="form-control" id="font_family">
                                     <option value="Arial">Arial</option>
                                     <option value="Times New Roman">Times New Roman</option>
-                                    <option value="Calibri">Calibri</option>
+                                    <option value="RobotoCondensed-Bold">RobotoCondensed-Bold</option>
                                 </select>
                             </div>
                         </form>

@@ -1,3 +1,11 @@
+/**-------------------------------*/
+/**-------------Fonts------------------*/
+/**-------------------------------*/
+@font-face {
+    font-family: 'RobotoCondensed-Bold';
+    src: url('../fonts/RobotoCondensed-Bold.ttf') format('truetype');
+}
+
 body {
     margin: 0;
     padding: 0;
@@ -25,6 +33,14 @@ a {
     outline: none;
 }
 
+.display_none{
+     display: none;
+ }
+
+.display_block{
+    display: block;
+}
+
 .header {
     min-height: 125px;
 }
@@ -34,6 +50,9 @@ a {
     padding: 15px;
 }
 
+p#errors{
+    color: #9a260f;
+}
 .logo {
     padding-left: 50px;
 }
@@ -45,6 +64,21 @@ a {
 
 .logo a:hover {
     background: #849f77;
+}
+
+.welcome{
+    margin-bottom: 10px;
+    display: none;
+}
+
+.welcome span{
+    font-weight: 700;
+    color: #1a320f;
+    font-size: 18px;
+}
+
+.welcome .btn{
+    margin-top: 5px;
 }
 
 .autorization {
@@ -101,7 +135,7 @@ a {
 }
 
 .sidebar #burger {
-    display: block;
+    display: none;
     margin: 15px 0;
     background-color: #1a320f;
     color: #d8e5c6;
@@ -132,9 +166,9 @@ a {
     font-size: 16px;
 }
 
-.display_none {
+/*.controls{
     display: none;
-}
+}*/
 
 .btn-delete {
     width: 100%;
