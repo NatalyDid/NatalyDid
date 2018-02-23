@@ -1,5 +1,5 @@
 /**-------------------------------*/
-/**-------------Fonts------------------*/
+/**-------------Fonts-------------*/
 /**-------------------------------*/
 @font-face {
     font-family: 'RobotoCondensed-Bold';
@@ -166,10 +166,6 @@ p#errors{
     font-size: 16px;
 }
 
-/*.controls{
-    display: none;
-}*/
-
 .btn-delete {
     width: 100%;
     margin: 15px 0;
@@ -188,7 +184,6 @@ p#errors{
     background: #d2d6a8;
     padding: 20px;
     min-height: calc(100vh - 200px);
-
 }
 
 .main-row {

@@ -1,31 +1,22 @@
-// подключаемся к firebase для регистрации
-
 $(function () {
+
+    ///*********************************///
+    ///***Registration, authorization***///
+    ///*********************************///
+
     const errors = $("#errors");
     const failed = {fail: false, errors: []};
     const userName = $(".user-name");
-    //var isLoggedIn;
 
-    // создаем сессию если пользователь уже логинился
     initSession();
 
-    // обработка формы регистрации
     handleFormRegistration();
 
-    // обработка формы входа
     handleFormLogin();
 
-    // выйти
     logOut();
 
-    /*function isAlreadyLogged() {
-        if (!isLoggedIn){
-            $('ul.autorization').toggleClass("display_none");
-            $('div.welcome').toggleClass("display_none");
-        }
-    }*/
-
-    // удаленике ошибок после редактировании формы
+    /*******removing errors after editing a form*****/
     function changeForm(form) {
         form.change(function () {
             errors.text("");
@@ -34,23 +25,20 @@ $(function () {
         });
     }
 
-    // инициализация сессии
+    /***********session initialization***************/
     function initSession() {
-        //isLoggedIn = true;
         firebase.auth().onAuthStateChanged(function (user) {
             if (user) {
                 userName.text("Welcome, " + user.displayName + "!");
                 $('ul.autorization').css("display", "none");
                 $('div.welcome').css("display", "block");
-                $('div.controls').removeClass("display_none");
+                $('div.controls').addClass("display_block");
                 $('.sidebar #burger').css("display", "block");
-
-                //console.log('lalala');
             }
-
         });
     }
 
+    /*************user creating***********************/
     function createUser(email, password, name) {
         firebase
             .auth()
@@ -66,12 +54,11 @@ $(function () {
                     });
             })
             .catch(function (err) {
-                // обрабатываем ошибки
-                // выведу над формой
                 errors.text(err.message);
             });
     }
 
+    /**********registration form handling**************/
     function handleFormRegistration() {
         const form = $('form[name=register]');
 
@@ -79,17 +66,11 @@ $(function () {
 
         $('#register').click(function (event) {
             event.preventDefault();
+            const name = $('#register_login').val();
+            const email = $('#register_email').val();
+            const password = $('#register_password').val();
+            const repeatPassword = $('#register_confirmation').val();
 
-            //const {elements} = event.target;
-
-            const name = $('#register_login').val(); // Имя пользователя
-            const email = $('#register_email').val(); // email
-            const password = $('#register_password').val(); // password
-            const repeatPassword = $('#register_confirmation').val(); // repeat password
-
-            // делаем валидацию формы, савниваем пароли если нужно ...
-
-            // примитивная валидация
             if (password !== repeatPassword) {
                 failed.fail = true;
                 failed.errors.push("Пароли не совпадают!");
@@ -100,9 +81,7 @@ $(function () {
                 failed.errors.push("Введите имя");
             }
 
-            // подключаемся к firebase если пароли совпали и поле имя не пустое
             if (!failed.fail) {
-                // сохраняем юзера
                 createUser(email, password, name);
 
                 $('#register_login').value = "";
@@ -110,7 +89,6 @@ $(function () {
                 $('#register_password').value = "";
                 $('#register_confirmation').value = "";
             } else {
-                // если есть ошибки, выводим на экран
                 let stringErrors = "";
                 for (let error of failed.errors) {
                     stringErrors += error + "<br>";
@@ -120,36 +98,31 @@ $(function () {
         });
     }
 
-    // форма аутентификации
+    /**********authentication form handling*************/
     function handleFormLogin() {
         const form = $('form[name=auth]');
         changeForm(form);
-        // делаешь какую нибудь проверку пароля и почты, потом авторизируешь
         $('#auth').click(function (event) {
             event.preventDefault();
-            const email = $('#auth_login').val(); // первый input в форме
-            const password = $('#auth_password').val(); // второй input в форме
+            const email = $('#auth_login').val();
+            const password = $('#auth_password').val();
 
             firebase
                 .auth()
                 .signInWithEmailAndPassword(email, password)
                 .then(function (user) {
-                    // наши действия
                     initSession();
                     $('#auth_login').value = '';
                     $('#auth_password').value = '';
                 })
                 .catch(function (err) {
-                    // обработка ошибок
                     errors.text(err.message);
-                    console.log(err);
                 });
         });
     }
 
-    // выход
+    /*****************logout****************************/
     function logOut() {
-        //isLoggedIn = false;
         const btnLogout = $('#btnLogout');
         btnLogout.click(function () {
             firebase
@@ -157,7 +130,7 @@ $(function () {
                 .signOut().then(function () {
                 $('div.welcome').css("display", "none");
                 $('ul.autorization').css("display", "block");
-                $('div.controls').css("display", "none");
+                $('div.controls').removeClass("display_block");
                 $('.sidebar #burger').css("display", "none");
 
             })
@@ -167,10 +140,14 @@ $(function () {
         });
     }
 
+    ///**************************///
+    ///***Sidebar fuctionality***///
+    ///**************************///
+
     /*******************toggle sidebar************************/
     $("button#burger").click(function () {
-        //$('div.controls').css("display", "");
-        $("ul.side-menu, div.controls").toggleClass("display_none");
+        $("ul.side-menu").toggleClass("display_none");
+        $("div.controls").toggleClass("display_block");
         $("#sidebar").toggleClass("col-sm-1 col-sm-3");
         $(".content").toggleClass("col-sm-11 col-sm-9");
     });
@@ -239,17 +216,7 @@ $(function () {
         par[length - 1].remove();
     });
 
-
 });
 
-var user2 = {
-    name: 2225552,
-    id: new Date(),
-    email: 'simple@gmail.com'
-}
 
-/*localStorage.setItem('User', JSON.stringify(user2));
-
-console.log('User', localStorage.getItem('User'));
-console.log('UserObj', JSON.parse(localStorage.getItem('User')));*/
 
