@@ -132,6 +132,11 @@ $(function () {
                 $('ul.autorization').css("display", "block");
                 $('div.controls').removeClass("display_block");
                 $('.sidebar #burger').css("display", "none");
+                if($("#sidebar").hasClass("col-sm-1")) {
+                    $("#sidebar").removeClass("col-sm-1").addClass("col-sm-3");
+                    $("ul.side-menu").toggleClass("display_none");
+                    $(".content").removeClass("col-sm-11").addClass("col-sm-9");
+                }
 
             })
                 .catch(function (err) {
